@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import MovieGrid from './MovieGrid';
+import MovieGrid from '../../components/MovieGrid';
 
 describe('MovieGrid', () => {
   it('renders a list of movie cards with the provided movies', () => {

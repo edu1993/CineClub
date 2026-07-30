@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import MovieCard from './MovieCard';
+import MovieCard from '../../components/MovieCard';
 
 describe('MovieCard', () => {
   it('renders the movie poster, title, year and average score', () => {

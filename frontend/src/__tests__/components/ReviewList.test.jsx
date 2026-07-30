@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import ReviewList from './ReviewList';
+import ReviewList from '../../components/ReviewList';
 
 describe('ReviewList', () => {
   it('renders each review author, score and comment', () => {
