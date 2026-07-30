@@ -1,16 +1,28 @@
 // Archivo de pruebas para el backend de CineClub.
 // Contiene pruebas de integración para la aplicación Express completa.
 
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+
+// Mock de fetch para controlar las llamadas externas a TMDB.
+vi.mock('../src/fetchClient.js', () => ({
+  fetch: vi.fn(),
+}));
+
 import request from 'supertest';
 import app from '../src/app.js';
 import { reviews } from '../src/reviews.js';
-import { describe, it, expect, beforeEach } from 'vitest';
+
+let fetchMock;
 
 describe('CineClub backend', () => {
   // Antes de cada prueba, vaciar el array de reseñas en memoria
   // para que las pruebas sean independientes unas de otras.
-  beforeEach(() => {
+  beforeEach(async () => {
     reviews.length = 0;
+    const fetchClient = await import('../src/fetchClient.js');
+    fetchMock = fetchClient.fetch;
+    fetchMock.mockReset();
+    process.env.TMDB_API_KEY = 'test-key';
   });
 
   it('responde con status 200 en GET /', async () => {
@@ -20,6 +32,31 @@ describe('CineClub backend', () => {
     // Se espera un status 200 y una respuesta JSON con la propiedad status.
     expect(response.status).toBe(200);
     expect(response.body).toEqual({ status: 'ok' });
+  });
+
+  it('busca películas en TMDB y devuelve 200 con los resultados', async () => {
+    // Simular la respuesta de TMDB para la búsqueda de Inception.
+    fetchMock.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ results: [{ id: 1, title: 'Inception' }] }),
+    });
+
+    const response = await request(app).get('/api/movies/search?q=Inception');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ results: [{ id: 1, title: 'Inception' }] });
+
+    // Verificar que se llamó a la URL correcta de TMDB con la API Key.
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledWith(
+      'https://api.themoviedb.org/3/search/movie?api_key=test-key&query=Inception'
+    );
+  });
+
+  it('devuelve 400 si falta el parámetro q en la búsqueda', async () => {
+    const response = await request(app).get('/api/movies/search');
+
+    expect(response.status).toBe(400);
   });
 
   it('crea una reseña y devuelve 201', async () => {
