@@ -2,15 +2,19 @@ import express from 'express';
 import { reviews } from './reviews.js';
 import { fetch } from './fetchClient.js';
 
+// Crear la aplicación Express.
 const app = express();
 
+// Permitir JSON en el cuerpo de las peticiones.
 app.use(express.json());
 
+// Middleware de logging para todas las requests.
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
 });
 
+// Ruta de healthcheck.
 app.get('/', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
@@ -63,6 +67,45 @@ app.get('/api/movies/search', async (req, res) => {
 
   const data = await response.json();
   return res.status(200).json(data);
+});
+
+app.get('/api/movies/:tmdbId', async (req, res) => {
+  const { tmdbId } = req.params;
+
+  // Easter egg oculto: devolver 418 para la película especial "teapot".
+  if (tmdbId === 'teapot') {
+    return res.status(418).json({ error: "I'm a teapot" });
+  }
+
+  const apiKey = process.env.TMDB_API_KEY;
+
+  if (!apiKey) {
+    return res.status(500).json({ error: 'TMDB_API_KEY no configurada' });
+  }
+
+  const url = `https://api.themoviedb.org/3/movie/${encodeURIComponent(tmdbId)}?api_key=${encodeURIComponent(apiKey)}`;
+  const response = await fetch(url);
+
+  if (response.status === 404) {
+    return res.status(404).json({ error: 'película no encontrada' });
+  }
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    return res.status(502).json({ error: 'error al consultar TMDB', details: errorText });
+  }
+
+  const movie = await response.json();
+  const movieReviews = reviews.filter((review) => review.tmdbId === tmdbId);
+  const avgScore = movieReviews.length > 0
+    ? movieReviews.reduce((sum, review) => sum + review.score, 0) / movieReviews.length
+    : 0;
+
+  return res.status(200).json({
+    ...movie,
+    reviews: movieReviews,
+    avgScore,
+  });
 });
 
 app.delete('/api/reviews/:reviewId', (req, res) => {
