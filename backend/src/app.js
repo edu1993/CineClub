@@ -39,4 +39,17 @@ app.post('/api/movies/:tmdbId/reviews', (req, res) => {
   return res.status(201).json(review);
 });
 
+app.delete('/api/reviews/:reviewId', (req, res) => {
+  const { reviewId } = req.params;
+  const index = reviews.findIndex((review) => review.id === reviewId);
+
+  if (index === -1) {
+    return res.status(404).json({ error: 'reseña no encontrada' });
+  }
+
+  reviews.splice(index, 1);
+
+  return res.status(204).send();
+});
+
 export default app;

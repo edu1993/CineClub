@@ -113,4 +113,29 @@ describe('CineClub backend', () => {
 
     expect(response.status).toBe(400);
   });
+
+  it('elimina una reseña existente y devuelve 204', async () => {
+    // Insertar una reseña directamente en el array en memoria.
+    const review = {
+      id: 'review-123',
+      tmdbId: '123',
+      author: 'Luis',
+      score: 5,
+      comment: 'Perfecta',
+    };
+    reviews.push(review);
+
+    // Llamar al endpoint DELETE para eliminar por ID.
+    const response = await request(app).delete('/api/reviews/review-123');
+
+    expect([200, 204]).toContain(response.status);
+    expect(reviews).toHaveLength(0);
+  });
+
+  it('devuelve 404 si intenta eliminar una reseña inexistente', async () => {
+    // No insertar ninguna reseña con este ID.
+    const response = await request(app).delete('/api/reviews/no-existe');
+
+    expect(response.status).toBe(404);
+  });
 });
