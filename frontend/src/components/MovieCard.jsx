@@ -6,12 +6,12 @@ function MovieCard({ movie }) {
   const year = movie?.release_date ? new Date(movie.release_date).getFullYear() : 'N/A';
 
   return (
-    <article className="movie-card">
+    <button type="button" className="movie-card" data-movie-id={movie?.id} aria-label={movie?.title || 'Movie poster'}>
       <img src={posterUrl} alt={movie?.title || 'Movie poster'} />
       <h3>{movie?.title || 'Untitled movie'}</h3>
       <p>{year}</p>
       <p>Avg score: {movie?.avgScore ?? 'N/A'}</p>
-    </article>
+    </button>
   );
 }
 
