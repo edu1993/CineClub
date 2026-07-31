@@ -56,6 +56,19 @@ function SearchView() {
     }
   };
 
+  const handleReviewSubmit = (review) => {
+    setSelectedMovie((current) => {
+      if (!current) {
+        return current;
+      }
+
+      return {
+        ...current,
+        reviews: [...(current.reviews || []), { ...review, id: Date.now() }],
+      };
+    });
+  };
+
   return (
     <div>
       <SearchBar onSearch={handleSearch} />
@@ -74,7 +87,7 @@ function SearchView() {
           <MovieGrid movies={movies} />
         </div>
       )}
-      {!loading && view === 'detail' && selectedMovie && <MovieDetail movie={selectedMovie} />}
+      {!loading && view === 'detail' && selectedMovie && <MovieDetail movie={selectedMovie} onReviewSubmit={handleReviewSubmit} />}
     </div>
   );
 }
