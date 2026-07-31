@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "dev": "vite",
     "test": "vitest run src/__tests__",
     "test:e2e": "playwright test"
   },

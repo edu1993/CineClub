@@ -1,9 +1,13 @@
 import express from 'express';
+import cors from 'cors';
 import { reviews } from './reviews.js';
 import { fetch } from './fetchClient.js';
 
 // Crear la aplicación Express.
 const app = express();
+
+// Permitir CORS.
+app.use(cors());
 
 // Permitir JSON en el cuerpo de las peticiones.
 app.use(express.json());
@@ -53,8 +57,34 @@ app.get('/api/movies/search', async (req, res) => {
 
   const apiKey = process.env.TMDB_API_KEY;
 
-  if (!apiKey) {
-    return res.status(500).json({ error: 'TMDB_API_KEY no configurada' });
+  // Modo demo: devolver resultados mock si no hay API key válida
+  if (!apiKey || apiKey === 'dummy') {
+    const demoResults = {
+      results: [
+        {
+          id: 27205,
+          title: 'Inception',
+          release_date: '2010-07-16',
+          poster_path: '/9gk7adHYeDMNNGY3ARwJ9YbtXwm.jpg',
+          avgScore: 4.5,
+        },
+        {
+          id: 157336,
+          title: 'Interstellar',
+          release_date: '2014-11-07',
+          poster_path: '/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg',
+          avgScore: 4.2,
+        },
+        {
+          id: 550,
+          title: 'Fight Club',
+          release_date: '1999-10-15',
+          poster_path: '/2lECpi35Hnbpa4y46JNnZGHa3J9.jpg',
+          avgScore: 4.8,
+        },
+      ],
+    };
+    return res.status(200).json(demoResults);
   }
 
   const url = `https://api.themoviedb.org/3/search/movie?api_key=${encodeURIComponent(apiKey)}&query=${encodeURIComponent(query)}`;
@@ -79,8 +109,45 @@ app.get('/api/movies/:tmdbId', async (req, res) => {
 
   const apiKey = process.env.TMDB_API_KEY;
 
-  if (!apiKey) {
-    return res.status(500).json({ error: 'TMDB_API_KEY no configurada' });
+  // Modo demo: devolver datos mock si no hay API key válida
+  const demoMovies = {
+    27205: {
+      id: 27205,
+      title: 'Inception',
+      overview: 'A mind-bending thriller about shared dreaming and reality.',
+      release_date: '2010-07-16',
+      poster_path: '/9gk7adHYeDMNNGY3ARwJ9YbtXwm.jpg',
+    },
+    157336: {
+      id: 157336,
+      title: 'Interstellar',
+      overview: 'An epic science fiction film exploring space and time.',
+      release_date: '2014-11-07',
+      poster_path: '/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg',
+    },
+    550: {
+      id: 550,
+      title: 'Fight Club',
+      overview: 'A psychological thriller about identity and consumerism.',
+      release_date: '1999-10-15',
+      poster_path: '/2lECpi35Hnbpa4y46JNnZGHa3J9.jpg',
+    },
+  };
+
+  if (!apiKey || apiKey === 'dummy') {
+    if (demoMovies[tmdbId]) {
+      const movieReviews = reviews.filter((review) => review.tmdbId === String(tmdbId));
+      const avgScore = movieReviews.length > 0
+        ? movieReviews.reduce((sum, review) => sum + review.score, 0) / movieReviews.length
+        : 0;
+
+      return res.status(200).json({
+        ...demoMovies[tmdbId],
+        reviews: movieReviews,
+        avgScore,
+      });
+    }
+    return res.status(404).json({ error: 'película no encontrada' });
   }
 
   const url = `https://api.themoviedb.org/3/movie/${encodeURIComponent(tmdbId)}?api_key=${encodeURIComponent(apiKey)}`;
