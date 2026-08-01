@@ -1,0 +1,143 @@
+.movie-detail {
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.detail-header {
+  position: relative;
+  padding: 40px 20px;
+  color: white;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.detail-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+  z-index: 1;
+}
+
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background: white;
+  transform: translateX(-3px);
+}
+
+.detail-content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.poster-container {
+  width: 200px;
+}
+
+.movie-poster {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  object-fit: cover;
+}
+
+.movie-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.movie-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  color: white;
+}
+
+.movie-release {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 15px 0;
+}
+
+.movie-score {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.score-label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+}
+
+.score-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffc107;
+}
+
+.movie-overview {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.95);
+  max-width: 600px;
+}
+
+.detail-reviews {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.detail-reviews h3 {
+  font-size: 24px;
+  margin: 0 0 20px 0;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .detail-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .poster-container {
+    width: 150px;
+  }
+
+  .movie-title {
+    font-size: 24px;
+  }
+
+  .movie-overview {
+    max-width: 100%;
+  }
+}

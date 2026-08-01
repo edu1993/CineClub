@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import StarRating from './StarRating';
+import './ReviewForm.css';
 
-function ReviewForm({ movieId, onSubmit }) {
-  const [author, setAuthor] = useState('');
-  const [score, setScore] = useState('');
+function ReviewForm({ movieId, onSubmit, author: defaultAuthor }) {
+  const [author] = useState(defaultAuthor || 'Anonymous');
+  const [score, setScore] = useState(0);
   const [comment, setComment] = useState('');
   const [error, setError] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -10,7 +12,7 @@ function ReviewForm({ movieId, onSubmit }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!author.trim() || !score || !comment.trim()) {
+    if (!score || !comment.trim()) {
       setError('All fields are required');
       setSubmitted(false);
       return;
@@ -19,7 +21,7 @@ function ReviewForm({ movieId, onSubmit }) {
     setError('');
 
     const payload = {
-      author: author.trim(),
+      author,
       score: Number(score),
       comment: comment.trim(),
     };
@@ -33,9 +35,10 @@ function ReviewForm({ movieId, onSubmit }) {
       });
 
       setSubmitted(true);
-      setAuthor('');
-      setScore('');
+      setScore(0);
       setComment('');
+
+      setTimeout(() => setSubmitted(false), 3000);
 
       if (onSubmit) {
         onSubmit(payload);
@@ -47,27 +50,27 @@ function ReviewForm({ movieId, onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {error && <p role="alert">{error}</p>}
-      {submitted && <p>Review submitted</p>}
+    <form onSubmit={handleSubmit} className="review-form">
+      {error && <p className="form-error" role="alert">{error}</p>}
+      {submitted && <p className="form-success">Review submitted!</p>}
 
-      <label htmlFor="author">Author</label>
-      <input id="author" value={author} onChange={(event) => setAuthor(event.target.value)} />
+      <div className="form-group">
+        <label className="form-label">Your rating</label>
+        <StarRating score={score} interactive onChange={setScore} />
+      </div>
 
-      <label htmlFor="score">Score</label>
-      <select id="score" value={score} onChange={(event) => setScore(event.target.value)}>
-        <option value="">Select</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
+      <div className="form-group">
+        <label htmlFor="comment" className="form-label">Your comment</label>
+        <textarea 
+          id="comment" 
+          value={comment} 
+          onChange={(event) => setComment(event.target.value)}
+          placeholder="Share your thoughts about this movie..."
+          className="form-textarea"
+        />
+      </div>
 
-      <label htmlFor="comment">Comment</label>
-      <textarea id="comment" value={comment} onChange={(event) => setComment(event.target.value)} />
-
-      <button type="submit">Submit review</button>
+      <button type="submit" className="submit-button">Submit review</button>
     </form>
   );
 }

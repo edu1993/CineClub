@@ -1,15 +1,20 @@
+import StarRating from './StarRating';
+import './ReviewList.css';
+
 function ReviewList({ reviews = [] }) {
   if (!reviews.length) {
-    return <p>No reviews yet.</p>;
+    return <p className="no-reviews">No reviews yet.</p>;
   }
 
   return (
-    <ul>
+    <ul className="review-list">
       {reviews.map((review) => (
-        <li key={review.id}>
-          <strong>{review.author}</strong>
-          <div>{review.score}/5</div>
-          <p>{review.comment}</p>
+        <li key={review.id} className="review-item">
+          <div className="review-header">
+            <strong className="review-author">{review.author}</strong>
+            <StarRating score={review.score} />
+          </div>
+          <p className="review-comment">{review.comment}</p>
         </li>
       ))}
     </ul>
