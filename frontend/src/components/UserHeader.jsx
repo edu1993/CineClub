@@ -1,6 +1,6 @@
 import '../styles/components/UserHeader.css';
 
-function UserHeader({ username, onLogout }) {
+function UserHeader({ username, onLogout, onNavigate, activePage }) {
   const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}`;
 
   return (
@@ -9,9 +9,15 @@ function UserHeader({ username, onLogout }) {
         <div className="brand-block">
           <h1 className="app-title">🎬 CineClub</h1>
           <nav className="top-nav" aria-label="Primary navigation">
-            <button type="button" className="nav-link">Home</button>
-            <button type="button" className="nav-link">Movies</button>
-            <button type="button" className="nav-link">Reviews</button>
+            <button type="button" className={`nav-link ${activePage === 'search' ? 'active' : ''}`} onClick={() => onNavigate('search')}>
+              Home
+            </button>
+            <button type="button" className={`nav-link ${activePage === 'random' ? 'active' : ''}`} onClick={() => onNavigate('random')}>
+              Movies
+            </button>
+            <button type="button" className={`nav-link ${activePage === 'reviews' ? 'active' : ''}`} onClick={() => onNavigate('reviews')}>
+              Reviews
+            </button>
           </nav>
         </div>
         

@@ -19,7 +19,7 @@ function SearchBar({ onSearch }) {
   };
 
   return (
-    <div className="search-bar">
+    <div id="search" className="search-bar">
       <div className="search-input-wrapper">
         <input
           aria-label="Search movies"

@@ -2,8 +2,7 @@ import { useState } from 'react';
 import StarRating from './StarRating';
 import '../styles/components/ReviewForm.css';
 
-function ReviewForm({ movieId, onSubmit, author: defaultAuthor }) {
-  const [author, setAuthor] = useState(defaultAuthor ?? '');
+function ReviewForm({ movieId, onSubmit, author = 'Anonymous' }) {
   const [score, setScore] = useState(0);
   const [comment, setComment] = useState('');
   const [error, setError] = useState('');
@@ -53,30 +52,6 @@ function ReviewForm({ movieId, onSubmit, author: defaultAuthor }) {
     <form onSubmit={handleSubmit} className="review-form">
       {error && <p className="form-error" role="alert">{error}</p>}
       {submitted && <p className="form-success">Review submitted!</p>}
-
-      <div className="form-group">
-        <label htmlFor="author" className="form-label">Author</label>
-        <input
-          id="author"
-          type="text"
-          value={author}
-          onChange={(event) => setAuthor(event.target.value)}
-          placeholder="Your name"
-          className="form-textarea"
-        />
-      </div>
-
-      <div className="form-group">
-        <label htmlFor="score" className="form-label">Score</label>
-        <select id="score" value={score} onChange={(event) => setScore(Number(event.target.value))} className="form-textarea">
-          <option value="0">Select a score</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-      </div>
 
       <div className="form-group">
         <label className="form-label">Your rating</label>

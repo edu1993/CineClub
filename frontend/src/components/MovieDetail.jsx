@@ -19,7 +19,7 @@ function MovieDetail({ movie, onReviewSubmit, onGoBack, currentUser }) {
     : 0);
 
   return (
-    <section aria-label="movie detail" className="movie-detail">
+    <section id="reviews" aria-label="movie detail" className="movie-detail">
       <div 
         className="detail-header"
         style={{

@@ -25,10 +25,9 @@ describe('ReviewForm', () => {
     const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: async () => ({}) });
     vi.stubGlobal('fetch', fetchMock);
 
-    render(<ReviewForm movieId={7} onSubmit={vi.fn()} />);
+    render(<ReviewForm movieId={7} onSubmit={vi.fn()} author="Ana" />);
 
-    await user.type(screen.getByLabelText(/author/i), 'Ana');
-    await user.selectOptions(screen.getByLabelText(/score/i), '5');
+    await user.click(screen.getByRole('button', { name: /5 stars/i }));
     await user.type(screen.getByLabelText(/comment/i), 'Great movie');
     await user.click(screen.getByRole('button', { name: /submit review/i }));
 
@@ -46,10 +45,9 @@ describe('ReviewForm', () => {
     const user = userEvent.setup();
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({}) }));
 
-    render(<ReviewForm movieId={2} onSubmit={vi.fn()} />);
+    render(<ReviewForm movieId={2} onSubmit={vi.fn()} author="Luis" />);
 
-    await user.type(screen.getByLabelText(/author/i), 'Luis');
-    await user.selectOptions(screen.getByLabelText(/score/i), '4');
+    await user.click(screen.getByRole('button', { name: /4 stars/i }));
     await user.type(screen.getByLabelText(/comment/i), 'Loved it');
     await user.click(screen.getByRole('button', { name: /submit review/i }));
 
