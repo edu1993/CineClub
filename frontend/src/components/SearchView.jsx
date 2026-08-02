@@ -12,7 +12,12 @@ function SearchView() {
   const [error, setError] = useState('');
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [view, setView] = useState('search');
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('cineclub_user') || 'Guest';
+    }
+    return 'Guest';
+  });
   const [reviewedMovies, setReviewedMovies] = useState([]);
 
   const apiBaseUrl = import.meta.env.VITE_API_URL || import.meta.env.REACT_APP_API_URL || 'http://localhost:3001';
@@ -36,8 +41,10 @@ function SearchView() {
     const savedUser = localStorage.getItem('cineclub_user');
     if (savedUser) {
       setCurrentUser(savedUser);
+    } else if (!currentUser) {
+      setCurrentUser('Guest');
     }
-  }, []);
+  }, [currentUser]);
 
   const handleSearch = async (query) => {
     setLoading(true);
@@ -112,7 +119,7 @@ function SearchView() {
     setView('search');
   };
 
-  if (!currentUser) {
+  if (!currentUser && currentUser !== 'Guest') {
     return <LoginView onLogin={handleLogin} />;
   }
 

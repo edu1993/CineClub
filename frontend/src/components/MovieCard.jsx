@@ -11,7 +11,7 @@ function MovieCard({ movie }) {
       <h3>{movie?.title || 'Untitled movie'}</h3>
       <p>{year}</p>
       <div className="movie-score-pill">
-        ⭐ {movie?.avgScore ? Number(movie.avgScore).toFixed(1) : 'N/A'}
+        Avg score: {movie?.avgScore ? Number(movie.avgScore).toFixed(1) : 'N/A'}
       </div>
     </button>
   );
