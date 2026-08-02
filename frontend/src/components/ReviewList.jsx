@@ -1,5 +1,5 @@
 import StarRating from './StarRating';
-import './ReviewList.css';
+import '../styles/components/ReviewList.css';
 
 function ReviewList({ reviews = [] }) {
   if (!reviews.length) {

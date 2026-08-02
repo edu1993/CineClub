@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ReviewForm from './ReviewForm';
 import ReviewList from './ReviewList';
-import './MovieDetail.css';
+import '../styles/components/MovieDetail.css';
 
 function MovieDetail({ movie, onReviewSubmit, onGoBack, currentUser }) {
   const [posterLoaded, setPosterLoaded] = useState(false);

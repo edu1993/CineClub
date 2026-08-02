@@ -1,4 +1,4 @@
-import './UserHeader.css';
+import '../styles/components/UserHeader.css';
 
 function UserHeader({ username, onLogout }) {
   const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}`;

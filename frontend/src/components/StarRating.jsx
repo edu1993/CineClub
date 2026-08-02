@@ -1,4 +1,4 @@
-import './StarRating.css';
+import '../styles/components/StarRating.css';
 
 function StarRating({ score, interactive = false, onChange = null }) {
   const handleClick = (index) => {

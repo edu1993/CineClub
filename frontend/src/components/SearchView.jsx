@@ -4,7 +4,7 @@ import MovieGrid from './MovieGrid';
 import MovieDetail from './MovieDetail';
 import LoginView from './LoginView';
 import UserHeader from './UserHeader';
-import './SearchView.css';
+import '../styles/components/SearchView.css';
 
 function SearchView() {
   const [movies, setMovies] = useState([]);

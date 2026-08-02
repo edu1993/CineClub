@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import StarRating from './StarRating';
-import './ReviewForm.css';
+import '../styles/components/ReviewForm.css';
 
 function ReviewForm({ movieId, onSubmit, author: defaultAuthor }) {
   const [author] = useState(defaultAuthor || 'Anonymous');
