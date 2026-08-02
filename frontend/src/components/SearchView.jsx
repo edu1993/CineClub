@@ -14,7 +14,6 @@ function SearchView() {
   const [view, setView] = useState('search');
   const [currentUser, setCurrentUser] = useState(null);
   const [reviewedMovies, setReviewedMovies] = useState([]);
-  const [recommendedMovie, setRecommendedMovie] = useState(null);
 
   const apiBaseUrl = import.meta.env.VITE_API_URL || import.meta.env.REACT_APP_API_URL || 'http://localhost:3001';
 
@@ -29,7 +28,6 @@ function SearchView() {
     setMovies([]);
     setSelectedMovie(null);
     setReviewedMovies([]);
-    setRecommendedMovie(null);
     setView('search');
     localStorage.removeItem('cineclub_user');
   };
@@ -109,48 +107,8 @@ function SearchView() {
     });
   };
 
-  const handleGetRandomRecommendation = async () => {
-    setLoading(true);
-    setError('');
-
-    try {
-      // Popular searches to pick a random recommendation
-      const searches = [
-        'Action',
-        'Drama',
-        'Comedy',
-        'Sci-Fi',
-        'Horror',
-        'Romance',
-        'Thriller',
-        'Animation',
-      ];
-      const randomSearch = searches[Math.floor(Math.random() * searches.length)];
-
-      const response = await fetch(
-        `${apiBaseUrl}/api/movies/search?q=${encodeURIComponent(randomSearch)}`
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch recommendations');
-      }
-
-      const data = await response.json();
-      if (data.results && data.results.length > 0) {
-        const randomMovie = data.results[Math.floor(Math.random() * data.results.length)];
-        await handleMovieClick(randomMovie);
-        setRecommendedMovie(randomMovie);
-      }
-    } catch (err) {
-      setError('Error loading recommendation');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleGoBack = () => {
     setSelectedMovie(null);
-    setRecommendedMovie(null);
     setView('search');
   };
 
@@ -158,22 +116,62 @@ function SearchView() {
     return <LoginView onLogin={handleLogin} />;
   }
 
+  const categories = ['Trending', 'Top Rated', 'New Releases', 'Action', 'Drama', 'Sci-Fi'];
+
   return (
     <div className="search-view-container">
       <UserHeader username={currentUser} onLogout={handleLogout} />
       
       <div className="search-view-content">
+        <section className="hero-panel">
+          <div>
+            <p className="hero-kicker">CINECLUB</p>
+            <h2>Search movies and point what you want to watch</h2>
+            <p className="hero-copy">Find a film, open its details, and leave your score so your picks are always organized.</p>
+          </div>
+          <div className="hero-stats">
+            <div>
+              <strong>{reviewedMovies.length}</strong>
+              <span>Movies pointed</span>
+            </div>
+            <div>
+              <strong>Live</strong>
+              <span>Search and rate instantly</span>
+            </div>
+          </div>
+        </section>
+
+        <div className="category-bar" aria-label="Movie categories">
+          {categories.map((category) => (
+            <button key={category} type="button" className="category-pill">
+              {category}
+            </button>
+          ))}
+        </div>
+
+        <section className="featured-strip">
+          <div>
+            <p className="featured-label">YOUR WATCHLIST</p>
+            <h3>Point and remember your favorites</h3>
+          </div>
+          <div className="featured-tags">
+            <span>🎯 Point movies</span>
+            <span>⭐ Leave ratings</span>
+            <span>📝 Save your picks</span>
+          </div>
+        </section>
+
+        <section className="cover-card">
+          <div className="cover-content">
+            <p className="cover-label">START HERE</p>
+            <h3>Search a movie and make it yours</h3>
+            <p>Use the search bar to find films, open the detail view, and point the ones you want to watch.</p>
+          </div>
+        </section>
+
         <SearchBar onSearch={handleSearch} />
         
         <div className="action-buttons">
-          <button 
-            onClick={handleGetRandomRecommendation}
-            className="random-button"
-            disabled={loading}
-          >
-            🎲 Get Random Recommendation
-          </button>
-          
           {reviewedMovies.length > 0 && (
             <div className="reviewed-info">
               <span className="badge">{reviewedMovies.length}</span>

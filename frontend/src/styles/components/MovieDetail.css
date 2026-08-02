@@ -1,13 +1,13 @@
 .movie-detail {
-  background: #f5f5f5;
+  background: #101218;
   min-height: 100vh;
 }
 
 .detail-header {
   position: relative;
-  padding: 40px 20px;
+  padding: 40px 20px 32px;
   color: white;
-  min-height: 400px;
+  min-height: 420px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -16,11 +16,8 @@
 .detail-header::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.25) 100%);
   z-index: 1;
 }
 
@@ -32,38 +29,39 @@
   background: rgba(255, 255, 255, 0.9);
   border: none;
   padding: 10px 16px;
-  border-radius: 8px;
+  border-radius: 999px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
-  color: #333;
+  color: #121212;
   transition: all 0.2s ease;
 }
 
 .back-button:hover {
   background: white;
-  transform: translateX(-3px);
+  transform: translateX(-2px);
 }
 
 .detail-content {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 30px;
-  max-width: 900px;
+  grid-template-columns: 220px 1fr;
+  gap: 28px;
+  max-width: 980px;
   margin: 0 auto;
+  align-items: end;
 }
 
 .poster-container {
-  width: 200px;
+  width: 220px;
 }
 
 .movie-poster {
   width: 100%;
   height: auto;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   object-fit: cover;
 }
 
@@ -74,53 +72,57 @@
 }
 
 .movie-title {
-  font-size: 32px;
-  font-weight: 700;
-  margin: 0 0 10px 0;
+  font-size: 34px;
+  font-weight: 800;
+  margin: 0 0 8px 0;
   color: white;
 }
 
 .movie-release {
   font-size: 16px;
   color: rgba(255, 255, 255, 0.8);
-  margin: 0 0 15px 0;
+  margin: 0 0 14px 0;
 }
 
 .movie-score {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  width: fit-content;
+  padding: 8px 12px;
+  background: rgba(245, 197, 24, 0.16);
+  border-radius: 999px;
 }
 
 .score-label {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.83);
   font-size: 14px;
 }
 
 .score-value {
   font-size: 16px;
   font-weight: 700;
-  color: #ffc107;
+  color: #f5c518;
 }
 
 .movie-overview {
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 1.7;
   color: rgba(255, 255, 255, 0.95);
-  max-width: 600px;
+  max-width: 680px;
 }
 
 .detail-reviews {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 0 20px;
+  max-width: 980px;
+  margin: 34px auto 0;
+  padding: 0 20px 40px;
 }
 
 .detail-reviews h3 {
   font-size: 24px;
   margin: 0 0 20px 0;
-  color: #333;
+  color: #f5f5f1;
 }
 
 @media (max-width: 768px) {
@@ -130,7 +132,7 @@
   }
 
   .poster-container {
-    width: 150px;
+    width: 160px;
   }
 
   .movie-title {

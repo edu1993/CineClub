@@ -10,7 +10,9 @@ function MovieCard({ movie }) {
       <img src={posterUrl} alt={movie?.title || 'Movie poster'} />
       <h3>{movie?.title || 'Untitled movie'}</h3>
       <p>{year}</p>
-      <p>Avg score: {movie?.avgScore ?? 'N/A'}</p>
+      <div className="movie-score-pill">
+        ⭐ {movie?.avgScore ? Number(movie.avgScore).toFixed(1) : 'N/A'}
+      </div>
     </button>
   );
 }

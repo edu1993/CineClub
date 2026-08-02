@@ -6,7 +6,14 @@ function UserHeader({ username, onLogout }) {
   return (
     <div className="user-header">
       <div className="header-content">
-        <h1 className="app-title">🎬 CineClub</h1>
+        <div className="brand-block">
+          <h1 className="app-title">🎬 CineClub</h1>
+          <nav className="top-nav" aria-label="Primary navigation">
+            <button type="button" className="nav-link">Home</button>
+            <button type="button" className="nav-link">Movies</button>
+            <button type="button" className="nav-link">Reviews</button>
+          </nav>
+        </div>
         
         <div className="user-info">
           <img 

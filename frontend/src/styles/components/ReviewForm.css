@@ -1,8 +1,8 @@
 .review-form {
-  background: white;
+  background: #181b23;
   padding: 24px;
-  border-radius: 12px;
-  border: 1px solid #e0e0e0;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
   margin: 24px 0;
 }
 
@@ -13,45 +13,47 @@
 .form-label {
   display: block;
   margin-bottom: 10px;
-  font-weight: 600;
-  color: #333;
+  font-weight: 700;
+  color: #f5f5f1;
   font-size: 14px;
 }
 
 .form-textarea {
   width: 100%;
   padding: 12px 16px;
-  border: 1.5px solid #e0e0e0;
-  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
   font-size: 14px;
   font-family: inherit;
   resize: vertical;
   min-height: 100px;
-  transition: border-color 0.3s ease;
+  background: #11141a;
+  color: #f5f5f1;
+  transition: border-color 0.2s ease;
   box-sizing: border-box;
 }
 
 .form-textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #f5c518;
+  box-shadow: 0 0 0 3px rgba(245, 197, 24, 0.15);
 }
 
 .submit-button {
   width: 100%;
   padding: 12px 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: #f5c518;
+  color: #121212;
   border: none;
-  border-radius: 8px;
+  border-radius: 999px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
 .submit-button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .submit-button:active {
@@ -59,21 +61,21 @@
 }
 
 .form-error {
-  color: #e74c3c;
+  color: #ff6b6b;
   margin: 0 0 15px 0;
   font-size: 13px;
   padding: 8px 12px;
-  background: #fadbd8;
-  border-radius: 4px;
-  border-left: 3px solid #e74c3c;
+  background: rgba(255, 107, 107, 0.12);
+  border-radius: 8px;
+  border-left: 3px solid #ff6b6b;
 }
 
 .form-success {
-  color: #27ae60;
+  color: #8fe388;
   margin: 0 0 15px 0;
   font-size: 13px;
   padding: 8px 12px;
-  background: #d5f4e6;
-  border-radius: 4px;
-  border-left: 3px solid #27ae60;
+  background: rgba(143, 227, 136, 0.12);
+  border-radius: 8px;
+  border-left: 3px solid #8fe388;
 }
